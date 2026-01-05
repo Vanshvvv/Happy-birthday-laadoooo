@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Meri Laadoo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #7b2cbf, #240046);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* NAME */
+h1 {
+  margin-top: 30px;
+  font-size: 38px;
+}
+
+/* MESSAGE */
+p {
+  font-size: 18px;
+  margin: 15px;
+}
+
+/* COUNTDOWN */
+#countdown {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+/* SLIDESHOW */
+.slideshow {
+  width: 90%;
+  max-width: 320px;
+  margin: 20px auto;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+.slideshow img {
+  width: 100%;
+  display: none;
+}
+.slideshow img.active {
+  display: block;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  bottom: -10px;
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
+  color: pink;
+}
+@keyframes floatUp {
+  0% {transform: translateY(0); opacity: 1;}
+  100% {transform: translateY(-110vh); opacity: 0;}
+}
+
+/* FIREWORKS */
+.firework {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+  animation: boom 1s ease-out forwards;
+}
+@keyframes boom {
+  0% {transform: scale(1);}
+  100% {transform: scale(20); opacity: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎂 Meri laadoo 🎂</h1>
+
+<p>
+Apke pati humesha aise hi pyaar karenge aur humesha aap aise hi tang krte rhena ❤️😂
+</p>
+
+<div id="countdown"></div>
+
+<!-- SLIDESHOW -->
+<div class="slideshow">
+  <img src="images/1.jpg" class="active">
+  <img src="images/2.jpg">
+  <img src="images/3.jpg">
+  <img src="images/4.jpg">
+  <img src="images/5.jpg">
+  <img src="images/6.jpg">
+</div>
+
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="music/music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* COUNTDOWN */
+const birthdayDate = new Date("2003-01-09T00:00:00").getTime();
+setInterval(() => {
+  const now = new Date().getTime();
+  const d = birthdayDate - now;
+
+  if (d < 0) {
+    document.getElementById("countdown").innerHTML =
+      "🎉 Happy Birthday Meri Laadoo 🎉";
+    firework();
+    return;
+  }
+
+  const days = Math.floor(d / (1000*60*60*24));
+  const hrs = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  const min = Math.floor((d%(1000*60*60))/(1000*60));
+  const sec = Math.floor((d%(1000*60))/1000);
+
+  document.getElementById("countdown").innerHTML =
+    `${days}d ${hrs}h ${min}m ${sec}s`;
+}, 1000);
+
+/* SLIDESHOW */
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slideshow img");
+setInterval(() => {
+  slides.forEach(img => img.classList.remove("active"));
+  slideIndex = (slideIndex + 1) % slides.length;
+  slides[slideIndex].classList.add("active");
+}, 2500);
+
+/* HEARTS */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+/* FIREWORKS */
+function firework() {
+  const fw = document.createElement("div");
+  fw.className = "firework";
+  fw.style.left = Math.random()*100 + "vw";
+  fw.style.top = Math.random()*60 + "vh";
+  document.body.appendChild(fw);
+  setTimeout(() => fw.remove(), 1000);
+}
+</script>
+
+</body>
+</html>
